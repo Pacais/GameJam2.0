@@ -29,7 +29,7 @@ namespace frogjil
         private float mejoraClic = 0.5f;
 
         // Propiedades por Tier (precios base, rentas y riesgo asociados)
-        private Dictionary<string, (float precio, float renta, float riesgo)> propiedades = new Dictionary<string, (float, float, float)>
+        public Dictionary<string, (float precio, float renta, float riesgo)> propiedades = new Dictionary<string, (float, float, float)>
         {
             { "Piso", (50f, 2f, 0.03f) },
             { "Casa", (100f, 5f, 0.05f) },
@@ -43,7 +43,18 @@ namespace frogjil
         };
         public GameObject Bubble;
 
-        private Dictionary<string, int> propiedadesCompradas = new Dictionary<string, int>();
+        private Dictionary<string, int> propiedadesCompradas = new Dictionary<string, int>
+        {
+            { "Piso", 0 },
+            { "Casa", 0 },
+            { "Luxury_Casa", 0 },
+            { "Edificio", 0 },
+            { "Club_nocturno", 0 },
+            { "Rascacielos", 0 },
+            { "Centro_Comercial", 0 },
+            { "Aeropuerto_Privado", 0 },
+            { "Base_Espacial", 0 }
+        };
         private float inflacion = 0.1f;
         public float rentaTotal = 0f;
         private float gPClic;
@@ -58,6 +69,13 @@ namespace frogjil
         private List<GameObject> edificiosInstanciados = new List<GameObject>();
 
         public GameObject[] Edificio;
+
+
+        //Costes
+       
+        
+
+        public 
 
         // Inicialización
         void Start()
@@ -86,7 +104,7 @@ namespace frogjil
                 int index = (int)Enum.Parse(typeof(TipoPropiedad), tipo);
                 GameObject nuevoEdificio = Instantiate(Edificio[index], new Vector3(0, 0, 0), Quaternion.identity);
                 edificiosInstanciados.Add(nuevoEdificio);
-                // Actualizar el texto del dinero
+                
                 if(burbuja > 5){
                     if(UnityEngine.Random.Range(0f,2f)>1){
                         Debug.Log("Se ha producido una explosión");
@@ -96,6 +114,7 @@ namespace frogjil
                         }
                         Bubble.GetComponent<Animator>().Play("Explotion");
                     }                }
+                gameManager.ActualizarPreciosUI(propiedades); // Actualizar los precios en la UI
             }
             else
             {
@@ -150,5 +169,13 @@ namespace frogjil
             mesesDesdeExplosion = 0; // Reiniciar el contador
             Debug.Log("Precios y rentas ajustados después de la explosión de la burbuja.");
         }
+
+       
+      
+
+        
+        
     }
+
+
 }

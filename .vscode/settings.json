@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "duplicado.sln"
+    "dotnet.defaultSolution": "GameJam2.0.sln"
 }

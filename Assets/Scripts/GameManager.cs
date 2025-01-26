@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Globalization;
 using UnityEngine.SceneManagement;
 using frogjil;
+using Unity.VisualScripting;
 
 
 public class GameManager : MonoBehaviour
@@ -27,6 +28,33 @@ public class GameManager : MonoBehaviour
     private SimulacionBurbuja simulacionBurbuja;
     private string InformeMensual;
     float deudatotal = 0;
+    public Dictionary<string, TextMeshProUGUI> precioTextos; // Diccionario para asociar cada tipo de propiedad con su TextMeshProUGUI
+
+    public TextMeshProUGUI pisoText;
+    public TextMeshProUGUI casaText;
+    public TextMeshProUGUI luxuryCasaText;
+    public TextMeshProUGUI edificioText;
+    public TextMeshProUGUI clubNocturnoText;
+    public TextMeshProUGUI rascacielosText;
+    public TextMeshProUGUI centroComercialText;
+    public TextMeshProUGUI aeropuertoPrivadoText;
+    public TextMeshProUGUI baseEspacialText;
+
+    void Awake()
+    {
+        precioTextos = new Dictionary<string, TextMeshProUGUI>
+        {
+            { "Piso", pisoText },
+            { "Casa", casaText },
+            { "Luxury_Casa", luxuryCasaText },
+            { "Edificio", edificioText },
+            { "Club_nocturno", clubNocturnoText },
+            { "Rascacielos", rascacielosText },
+            { "Centro_Comercial", centroComercialText },
+            { "Aeropuerto_Privado", aeropuertoPrivadoText },
+            { "Base_Espacial", baseEspacialText }
+        };
+    }
 
     void Start()
     {
@@ -38,6 +66,7 @@ public class GameManager : MonoBehaviour
         targetDate = currentDate; // Inicialmente, la fecha objetivo es la misma que la fecha actual
         UpdateDateText();
         UpdateMoney(money);
+        ActualizarPreciosUI(simulacionBurbuja.propiedades);
         Debug.Log("Game started. Initial date: " + currentDate.ToString("MMMM yyyy", new CultureInfo("es-ES")));
     }
 
@@ -97,17 +126,14 @@ public class GameManager : MonoBehaviour
         Debug.Log("Cooldown activated. Target date: " + targetDate.ToString("MMMM yyyy", new CultureInfo("es-ES")));
     }
 
-    void PagarDeuda()
+    public void PagarDeuda()
     {
-        deudatotal = 0;
-        Debug.Log("PagarDeuda called. Current money: " + money);
-        foreach (float[] credito in credit.creditos)
+        for (int i = credit.creditos.Count - 1; i >= 0; i--)
         {
-            
-            Debug.Log("Processing credit: " + string.Join(", ", credito));
+            var credito = credit.creditos[i];
             if (credito[2] > 0)
             {
-                UpdateMoney(-credito[1]) ;
+                UpdateMoney(-credito[1]);
                 creditText.text = credito[1].ToString("F2");
                 credito[2]--; // Decrementar el número de pagos restantes
                 deudatotal += credito[1];
@@ -119,12 +145,12 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                credit.creditos.Remove(credito);
+                credit.creditos.RemoveAt(i);
                 Debug.Log("Credit removed: " + string.Join(", ", credito));
             }
         }
-
     }
+
     void GameOver()
     {
         Time.timeScale = 0;
@@ -152,4 +178,20 @@ public class GameManager : MonoBehaviour
     {
         UpdateMoney(-amount);
     }
+
+    public void ActualizarPreciosUI(Dictionary<string, (float precio, float renta, float riesgo)> propiedades)
+    {
+        foreach (var tipo in propiedades.Keys)
+        {
+            if (precioTextos.ContainsKey(tipo))
+            {
+                precioTextos[tipo].text = $"Precio : {propiedades[tipo].precio}";
+            }
+        }
+    }
+
+    // Actualizar precios UI
+
+
+    
 }
