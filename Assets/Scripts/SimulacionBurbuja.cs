@@ -22,6 +22,7 @@ namespace frogjil
         private GameManager gameManager;
 
         // Parámetros iniciales
+        
         private int anio = 2008;
         private int mes = 1;
         private int clicsMensuales = 3000;
@@ -43,39 +44,23 @@ namespace frogjil
         };
         public GameObject Bubble;
 
-        private Dictionary<string, int> propiedadesCompradas = new Dictionary<string, int>
-        {
-            { "Piso", 0 },
-            { "Casa", 0 },
-            { "Luxury_Casa", 0 },
-            { "Edificio", 0 },
-            { "Club_nocturno", 0 },
-            { "Rascacielos", 0 },
-            { "Centro_Comercial", 0 },
-            { "Aeropuerto_Privado", 0 },
-            { "Base_Espacial", 0 }
-        };
+        private Dictionary<string, int> propiedadesCompradas = new Dictionary<string, int>();
         private float inflacion = 0.1f;
         public float rentaTotal = 0f;
         private float gPClic;
+        private bool isAngry=false;
         private float burbuja = 0f;
 
         // Parámetros de la explosión
         private int frecuenciaExplosion = 24;      // Explosión cada 24 meses si no se alcanza el umbral
         private float ajustePrecio = 0.3f;         // Reducción del 30% en los precios tras la explosión
         private float ajusteRenta = 0.5f;          // Reducción del 50% en las rentas tras la explosión
-
+        int enfado;
         private int mesesDesdeExplosion = 0;
         private List<GameObject> edificiosInstanciados = new List<GameObject>();
 
         public GameObject[] Edificio;
-
-
-        //Costes
-       
-        
-
-        public 
+        public GameObject Rana;
 
         // Inicialización
         void Start()
@@ -104,8 +89,8 @@ namespace frogjil
                 int index = (int)Enum.Parse(typeof(TipoPropiedad), tipo);
                 GameObject nuevoEdificio = Instantiate(Edificio[index], new Vector3(0, 0, 0), Quaternion.identity);
                 edificiosInstanciados.Add(nuevoEdificio);
-                
-                if(burbuja > 5){
+                // Actualizar el texto del dinero
+                if(burbuja > 20){
                     if(UnityEngine.Random.Range(0f,2f)>1){
                         Debug.Log("Se ha producido una explosión");
                         ExplosiónBurbuja();
@@ -114,7 +99,7 @@ namespace frogjil
                         }
                         Bubble.GetComponent<Animator>().Play("Explotion");
                     }                }
-                gameManager.ActualizarPreciosUI(propiedades); // Actualizar los precios en la UI
+                    gameManager.ActualizarPreciosUI(propiedades); // Actualizar los precios en la UI
             }
             else
             {
@@ -147,35 +132,42 @@ namespace frogjil
                 ingresos += propiedad.Value * propiedades[propiedad.Key].renta;
                 Debug.Log(ingresos.ToString());
             }
+            if(isAngry){
+                enfado++;
+                if(enfado>2){
+                    Rana.GetComponent<Animator>().SetBool("Angry",false);
+                    isAngry=false;
+                    enfado=0;
+                }
+            }
             gameManager.AddMoney(ingresos);
             Debug.Log($"Ingresos generados: {ingresos}. Monedas después de ingresos: {gameManager.money}");
         }
 
         void ExplosiónBurbuja()
         {
-            Debug.Log($"💥 Burbuja explotó en {mes}/{anio} 💥");
+            Debug.Log($"Burbuja explotó en {mes}/{anio}");
+            // Crear una lista con las claves del diccionario
+            var tiposPropiedades = new List<string>(propiedades.Keys);
+
             // Ajustar precios y rentas
-            foreach (var tipo in propiedades.Keys)
+            foreach (var tipo in tiposPropiedades)
             {
                 var propiedad = propiedades[tipo];
                 propiedades[tipo] = (propiedad.precio * ajustePrecio, propiedad.renta * ajusteRenta, propiedad.riesgo);
             }
+
             rentaTotal = 0f;
             foreach (var propiedad in propiedadesCompradas)
             {
                 rentaTotal += propiedades[propiedad.Key].renta * propiedad.Value;
             }
+            Rana.GetComponent<Animator>().SetBool("Angry",true);
+            isAngry=true;
             burbuja = 0f; // Reiniciar el riesgo
             mesesDesdeExplosion = 0; // Reiniciar el contador
             Debug.Log("Precios y rentas ajustados después de la explosión de la burbuja.");
         }
 
-       
-      
-
-        
-        
     }
-
-
 }

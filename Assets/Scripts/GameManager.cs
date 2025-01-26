@@ -12,6 +12,8 @@ using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
+    public MusicManager musicManager;
+    bool IsGameOver = false;
     public float money=0;
     public TextMeshProUGUI dateText; // Referencia al componente Text para mostrar la fecha
     public TextMeshProUGUI moneyText; // Referencia al componente Text para mostrar el dinero
@@ -95,6 +97,10 @@ public class GameManager : MonoBehaviour
             credit.cooldown = false;
             Debug.Log("Cooldown set to false");
         }
+        if (Input.GetKeyDown(KeyCode.Space) && IsGameOver)
+        {
+           ReiniciarJuego();
+        }
     }
 
     void IncrementMonth()
@@ -153,9 +159,16 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
+        if (musicManager != null)
+        {
+            musicManager.StopMusic();
+        }
+
+        IsGameOver = true;
         Time.timeScale = 0;
         gameOver.SetActive(true);
         Debug.Log("Game Over");
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ReiniciarJuego();
@@ -166,7 +179,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         Debug.Log("Reiniciando juego");
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+        SceneManager.LoadScene("Game");
     }
 
     public void AddMoney(float amount)

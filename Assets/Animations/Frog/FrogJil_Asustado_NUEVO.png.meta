@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 509b15e78560fe741997f5eed40d27ac
+guid: c4eae920a880ec6468210fcaf3ba7d31
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -93,11 +93,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frogjil_Shocked_0
+      name: FrogJil_Asustado_NUEVO_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 049cabb941da19545a5fcbe2b98014ab
-      internalID: -1438031242
+      spriteID: cb8fc65516df7244a814437df4500fdc
+      internalID: 1283626472
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Frogjil_Shocked_1
+      name: FrogJil_Asustado_NUEVO_1
       rect:
         serializedVersion: 2
         x: 500
@@ -132,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72c8f2221e05e38429e5bd19735f71a1
-      internalID: 793722487
+      spriteID: 6ecfa9bb11d143d408d09c2080e41a44
+      internalID: -1799770209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Frogjil_Shocked_2
+      name: FrogJil_Asustado_NUEVO_2
       rect:
         serializedVersion: 2
         x: 1000
@@ -153,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 288415f4b509c6449a96974304e57f09
-      internalID: 1078837460
+      spriteID: d408f1ec7f1dacf48b4cf2749e06f6de
+      internalID: -908476081
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Frogjil_Shocked_3
+      name: FrogJil_Asustado_NUEVO_3
       rect:
         serializedVersion: 2
         x: 1500
@@ -174,8 +187,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35e09ee2dbf7b4d488719991ce9af846
-      internalID: 283602798
+      spriteID: 3e474c20a9aed5b4d8c69e5a3628cb66
+      internalID: 1557977351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrogJil_Asustado_NUEVO_4
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 0
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7d9d921856afde4e89e12c07554ec09
+      internalID: 142796511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrogJil_Asustado_NUEVO_5
+      rect:
+        serializedVersion: 2
+        x: 2500
+        y: 0
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edd719647b9571a46b085311b997e333
+      internalID: 938005396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrogJil_Asustado_NUEVO_6
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 0
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03404c6d460af254fb8ce09a7189cc96
+      internalID: -3869976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FrogJil_Asustado_NUEVO_7
+      rect:
+        serializedVersion: 2
+        x: 3500
+        y: 0
+        width: 500
+        height: 500
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11794344fc4da2646a4d1b9ffb31dd66
+      internalID: -964282141
       vertices: []
       indices: 
       edges: []
@@ -191,10 +288,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Frogjil_Shocked_0: -1438031242
-      Frogjil_Shocked_1: 793722487
-      Frogjil_Shocked_2: 1078837460
-      Frogjil_Shocked_3: 283602798
+      FrogJil_Asustado_NUEVO_0: 1283626472
+      FrogJil_Asustado_NUEVO_1: -1799770209
+      FrogJil_Asustado_NUEVO_2: -908476081
+      FrogJil_Asustado_NUEVO_3: 1557977351
+      FrogJil_Asustado_NUEVO_4: 142796511
+      FrogJil_Asustado_NUEVO_5: 938005396
+      FrogJil_Asustado_NUEVO_6: -3869976
+      FrogJil_Asustado_NUEVO_7: -964282141
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
