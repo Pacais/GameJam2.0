@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
                 + "Deuda total: " + deudatotal.ToString("C", new CultureInfo("es-ES")) + "\n"
                 + "Créditos restantes: " + credit.creditos.Count + "\n";
             informeText.text = InformeMensual;
+            deudatotal=0;
         }
 
         // Verificar si han pasado tres meses desde que se activó el cooldown
