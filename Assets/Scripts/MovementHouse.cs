@@ -1,58 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementHouse : MonoBehaviour
 {
-     float speed = 1.5f; // Velocidad de movimiento
-     float diametro = 4.5f; // Diámetro máximo permitido antes de rebotar
-    private Vector2 direction; // Dirección de movimiento
-     Transform centerTransform; // Punto central para calcular rebotes
+    public float speed = 5f; // Velocidad de movimiento
+     float maxDiameter = 4.4f; // Diámetro máximo permitido antes de rebotar
+    private Transform Center; // Centro del círculo
+    private Vector2 direction; // Dirección actual del movimiento
 
-    // Start is called before the first frame update
     void Start()
     {
-        // Si no se asigna un Transform en el Inspector, buscar uno por nombre o tag
-        if (centerTransform == null)
-        {
-            centerTransform = GameObject.Find("Burbuja_0")?.transform; // Busca por nombre
-            if (centerTransform == null)
-            {
-               return;
-            }
-        }
-
-        // Generar una dirección aleatoria inicial
-        SetRandomDirection();
+        // Genera una dirección inicial aleatoria
+        direction = Random.insideUnitCircle.normalized;
+        Center = GameObject.Find("Burbuja_0").transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (centerTransform == null) return;
-
-        // Mover el objeto en la dirección actual
+        // Mueve el objeto en la dirección actual
         transform.Translate(direction * speed * Time.deltaTime);
 
-        // Calcular la distancia desde el punto central
-        float distanceFromCenter = Vector2.Distance(centerTransform.position, transform.position);
+        // Calcula la distancia desde el centro
+        float distanceFromCenter = Vector2.Distance(Center.position, transform.position);
 
-        // Cambiar la dirección si el objeto supera el diámetro especificado
-        if (distanceFromCenter > diametro / 2f)
+        // Cambia la dirección si el objeto supera el radio máximo permitido
+        if (distanceFromCenter > maxDiameter / 2f)
         {
-            // Ajustar la posición al borde del círculo
-            Vector2 directionFromCenter = (transform.position - centerTransform.position).normalized;
-            transform.position = (Vector2)centerTransform.position + directionFromCenter * (diametro / 2f);
+            // Genera una nueva dirección aleatoria
+            direction = Random.insideUnitCircle.normalized;
 
-            // Asignar una nueva dirección aleatoria
-            SetRandomDirection();
+            // Ajusta la posición al borde del círculo
+            Vector2 directionFromCenter = ((Vector2)transform.position - (Vector2)Center.position).normalized;
+            transform.position = (Vector2)Center.position + directionFromCenter * (maxDiameter / 2f);
         }
-    }
-
-    void SetRandomDirection()
-    {
-        // Generar una nueva dirección aleatoria
-        float angle = Random.Range(0f, 360f); // Ángulo aleatorio en grados
-        direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)).normalized;
     }
 }

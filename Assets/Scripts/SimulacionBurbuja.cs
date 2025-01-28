@@ -62,7 +62,7 @@ namespace frogjil
         private float gPClic;
         private bool isAngry = false;
         private float burbuja = 0f;
-        private float explosionBurbuja = 10f;
+        private float explosionBurbuja = 15f;
 
         // Parámetros de la explosión
         private int frecuenciaExplosion = 24;      // Explosión cada 24 meses si no se alcanza el umbral
