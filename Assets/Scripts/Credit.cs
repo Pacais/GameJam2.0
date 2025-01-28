@@ -14,7 +14,6 @@ public class Credit : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        Debug.Log("GameManager encontrado: " + (gameManager != null));
         creditos = new List<float[]>();
         renderer = GetComponent<Renderer>();
 
@@ -31,7 +30,6 @@ public class Credit : MonoBehaviour
         {
             bajarTranparencia();
             gameManager.ActivateCooldown();
-            Debug.Log("Cooldown set to true");
             // Que se quite la opacidad del botón
             AddCredit();
             
@@ -52,7 +50,6 @@ public class Credit : MonoBehaviour
     }
       public void RestaurarTransparencia()
     {
-        Debug.Log("Restaurando transparencia");
         // Lógica para restaurar la transparencia del botón
         Color color = renderer.material.color;
         color.a = 1f; // Ajusta el valor de alfa para hacer el botón completamente opaco

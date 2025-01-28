@@ -18,8 +18,7 @@ public class MovementHouse : MonoBehaviour
             centerTransform = GameObject.Find("Burbuja_0")?.transform; // Busca por nombre
             if (centerTransform == null)
             {
-                Debug.LogError("No se asignó un 'centerTransform' y no se encontró un objeto llamado 'CenterPoint' en la jerarquía.");
-                return;
+               return;
             }
         }
 

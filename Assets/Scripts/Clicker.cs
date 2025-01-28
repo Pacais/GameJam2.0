@@ -23,7 +23,6 @@ public class Clicker : MonoBehaviour
         {
             // Actualizar el dinero en el GameManager
             gameManager.UpdateMoney(1);
-            Debug.Log("Dinero: " + gameManager.money);
 
             // Reproducir el sonido si no está sonando
             if (sonidodinero != null)
@@ -40,15 +39,8 @@ public class Clicker : MonoBehaviour
                     stopAudioCoroutine = null;
                 }
             }
-            else
-            {
-                Debug.Log("No suena");
-            }
         }
-        else
-        {
-            Debug.LogError("GameManager no encontrado!");
-        }
+        
     }
 
     // Método que se llama cuando se deja de hacer clic en el objeto

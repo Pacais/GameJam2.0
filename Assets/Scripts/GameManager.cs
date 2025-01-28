@@ -69,7 +69,6 @@ public class GameManager : MonoBehaviour
         UpdateDateText();
         UpdateMoney(money);
         ActualizarPreciosUI(simulacionBurbuja.propiedades);
-        Debug.Log("Game started. Initial date: " + currentDate.ToString("MMMM yyyy", new CultureInfo("es-ES")));
     }
 
     void Update()
@@ -77,7 +76,7 @@ public class GameManager : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= timeInterval)
         {
-            InformeMensual="";
+            InformeMensual = "";
             timer = 0f;
             IncrementMonth();
             UpdateDateText();
@@ -88,7 +87,7 @@ public class GameManager : MonoBehaviour
                 + "Deuda total: " + deudatotal.ToString("C", new CultureInfo("es-ES")) + "\n"
                 + "Créditos restantes: " + credit.creditos.Count + "\n";
             informeText.text = InformeMensual;
-            deudatotal=0;
+            deudatotal = 0;
         }
 
         // Verificar si han pasado tres meses desde que se activó el cooldown
@@ -96,18 +95,16 @@ public class GameManager : MonoBehaviour
         {
             credit.RestaurarTransparencia();
             credit.cooldown = false;
-            Debug.Log("Cooldown set to false");
         }
         if (Input.GetKeyDown(KeyCode.Space) && IsGameOver)
         {
-           ReiniciarJuego();
+            ReiniciarJuego();
         }
     }
 
     void IncrementMonth()
     {
         currentDate = currentDate.AddMonths(1);
-        Debug.Log("Month incremented. New date: " + currentDate.ToString("MMMM yyyy", new CultureInfo("es-ES")));
         simulacionBurbuja.CobrarLasRentas();
         rentaText.text = simulacionBurbuja.rentaTotal.ToString("C", new CultureInfo("es-ES"));
         //simulacionBurbuja.VerificarExplosionBurbuja();
@@ -116,21 +113,18 @@ public class GameManager : MonoBehaviour
     void UpdateDateText()
     {
         dateText.text = currentDate.ToString("MMMM yyyy", new CultureInfo("es-ES"));
-        Debug.Log("Date text updated: " + dateText.text);
     }
 
     public void UpdateMoney(float moneySum)
     {
         money += moneySum;
         moneyText.text = money.ToString("C", new CultureInfo("es-ES"));
-        Debug.Log("Money text updated: " + money);
     }
 
     public void ActivateCooldown()
     {
         credit.cooldown = true;
         targetDate = currentDate.AddMonths(3); // Establecer la fecha objetivo a tres meses en el futuro
-        Debug.Log("Cooldown activated. Target date: " + targetDate.ToString("MMMM yyyy", new CultureInfo("es-ES")));
     }
 
     public void PagarDeuda()
@@ -148,12 +142,10 @@ public class GameManager : MonoBehaviour
                 {
                     GameOver();
                 }
-                Debug.Log("Payment made. Remaining payments: " + credito[2] + ". New money: " + money);
-            }
+               }
             else
             {
                 credit.creditos.RemoveAt(i);
-                Debug.Log("Credit removed: " + string.Join(", ", credito));
             }
         }
     }
@@ -168,7 +160,6 @@ public class GameManager : MonoBehaviour
         IsGameOver = true;
         Time.timeScale = 0;
         gameOver.SetActive(true);
-        Debug.Log("Game Over");
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -179,7 +170,6 @@ public class GameManager : MonoBehaviour
     private void ReiniciarJuego()
     {
         Time.timeScale = 1;
-        Debug.Log("Reiniciando juego");
         SceneManager.LoadScene("Game");
     }
 
@@ -203,9 +193,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    // Actualizar precios UI
-
-
-    
 }

@@ -44,12 +44,25 @@ namespace frogjil
         };
         public GameObject Bubble;
 
-        private Dictionary<string, int> propiedadesCompradas = new Dictionary<string, int>();
+        private Dictionary<string, int> propiedadesCompradas = new Dictionary<string, int>
+        {
+            { "Piso", 0 },
+            { "Casa", 0 },
+            { "Luxury_Casa", 0 },
+            { "Edificio", 0 },
+            { "Club_nocturno", 0 },
+            { "Rascacielos", 0 },
+            { "Centro_Comercial", 0 },
+            { "Aeropuerto_Privado", 0 },
+            { "Base_Espacial", 0 }
+        };
+
         private float inflacion = 0.1f;
         public float rentaTotal = 0f;
         private float gPClic;
-        private bool isAngry=false;
+        private bool isAngry = false;
         private float burbuja = 0f;
+        private float explosionBurbuja = 10f;
 
         // Parámetros de la explosión
         private int frecuenciaExplosion = 24;      // Explosión cada 24 meses si no se alcanza el umbral
@@ -66,7 +79,6 @@ namespace frogjil
         void Start()
         {
             gameManager = FindObjectOfType<GameManager>();
-            Debug.Log("GameManager encontrado: " + (gameManager != null));
             gPClic = gClicBase;
             foreach (var tipo in propiedades.Keys)
             {
@@ -76,51 +88,40 @@ namespace frogjil
 
         public void ComprarPropiedad(string tipo)
         {
-            Debug.Log($"Intentando comprar propiedad: {tipo}");
-            Debug.Log($"Monedas actuales: {gameManager.money}, Precio de {tipo}: {propiedades[tipo].precio}");
             if (gameManager.money >= propiedades[tipo].precio)
             {
-                 gameManager.UpdateMoney(-propiedades[tipo].precio);
-                 Debug.Log($"Comprada {tipo}. Monedas restantes: {gameManager.money}");
+                gameManager.UpdateMoney(-propiedades[tipo].precio);
                 propiedadesCompradas[tipo]++;
                 rentaTotal += propiedades[tipo].renta;
                 propiedades[tipo] = (propiedades[tipo].precio * (1 + inflacion), propiedades[tipo].renta, propiedades[tipo].riesgo);
-                burbuja += propiedades[tipo].precio * propiedades[tipo].riesgo;
+                burbuja += propiedades[tipo].riesgo;
                 int index = (int)Enum.Parse(typeof(TipoPropiedad), tipo);
                 GameObject nuevoEdificio = Instantiate(Edificio[index], new Vector3(0, 0, 0), Quaternion.identity);
                 edificiosInstanciados.Add(nuevoEdificio);
-                // Actualizar el texto del dinero
-                if(burbuja > 20){
-                    if(UnityEngine.Random.Range(0f,2f)>1){
-                        Debug.Log("Se ha producido una explosión");
+
+                if (burbuja > explosionBurbuja)
+                {
+                    if (UnityEngine.Random.Range(0f, 2f) > 1)
+                    {
                         ExplosiónBurbuja();
-                        foreach (var edificio in edificiosInstanciados){
+                        foreach (var edificio in edificiosInstanciados)
+                        {
                             Destroy(edificio);
                         }
                         Bubble.GetComponent<Animator>().Play("Explotion");
-                    }                }
-                    gameManager.ActualizarPreciosUI(propiedades); // Actualizar los precios en la UI
-            }
-            else
-            {
-                Debug.Log($"No hay suficientes monedas para comprar {tipo}");
+                    }
+                }
+                gameManager.ActualizarPreciosUI(propiedades); // Actualizar los precios en la UI
             }
         }
 
         public void VenderPropiedad(string tipo)
         {
-            Debug.Log($"Intentando vender propiedad: {tipo}");
             if (propiedadesCompradas.ContainsKey(tipo) && propiedadesCompradas[tipo] > 0)
             {
                 propiedadesCompradas[tipo]--;
                 rentaTotal -= propiedades[tipo].renta;
                 gameManager.AddMoney(propiedades[tipo].precio * 0.8f); // Recuperar el 80% del precio de compra
-                burbuja -= propiedades[tipo].precio * propiedades[tipo].riesgo;
-                Debug.Log($"Vendida {tipo}. Monedas actuales: {gameManager.money}, Renta total: {rentaTotal}, Burbuja: {burbuja}");
-            }
-            else
-            {
-                Debug.Log($"No tienes propiedades de tipo {tipo} para vender");
             }
         }
 
@@ -141,12 +142,12 @@ namespace frogjil
                 }
             }
             gameManager.AddMoney(ingresos);
-            Debug.Log($"Ingresos generados: {ingresos}. Monedas después de ingresos: {gameManager.money}");
+            
         }
 
         void ExplosiónBurbuja()
         {
-            Debug.Log($"Burbuja explotó en {mes}/{anio}");
+          
             // Crear una lista con las claves del diccionario
             var tiposPropiedades = new List<string>(propiedades.Keys);
 
@@ -166,7 +167,8 @@ namespace frogjil
             isAngry=true;
             burbuja = 0f; // Reiniciar el riesgo
             mesesDesdeExplosion = 0; // Reiniciar el contador
-            Debug.Log("Precios y rentas ajustados después de la explosión de la burbuja.");
+            explosionBurbuja = 15;
+           
         }
 
     }
