@@ -8,6 +8,7 @@ using System.Globalization;
 using UnityEngine.SceneManagement;
 using frogjil;
 using Unity.VisualScripting;
+using JetBrains.Annotations;
 
 
 public class GameManager : MonoBehaviour
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI rentaText; // Referencia al componente Text para mostrar la renta
     public TextMeshProUGUI creditText; // Referencia al componente Text para mostrar el crédito;
     public TextMeshProUGUI informeText; // Referencia al componente Text para mostrar el informe mensual
-
+    public int nPropiedades=0;
     private DateTime currentDate;
     private DateTime targetDate;
     private float timer;
@@ -85,7 +86,8 @@ public class GameManager : MonoBehaviour
             InformeMensual = "Fecha: " + currentDate.ToString("MMMM yyyy", new CultureInfo("es-ES")) + "\n"
                 + "Renta total: " + simulacionBurbuja.rentaTotal.ToString("C", new CultureInfo("es-ES")) + "\n"
                 + "Deuda total: " + deudatotal.ToString("C", new CultureInfo("es-ES")) + "\n"
-                + "Créditos restantes: " + credit.creditos.Count + "\n";
+                + "Créditos restantes: " + credit.creditos.Count + "\n"
+                +"Propiedades compradas: " + nPropiedades + "\n";
             informeText.text = InformeMensual;
             deudatotal = 0;
         }

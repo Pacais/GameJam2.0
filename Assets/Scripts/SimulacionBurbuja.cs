@@ -90,6 +90,7 @@ namespace frogjil
         {
             if (gameManager.money >= propiedades[tipo].precio)
             {
+                gameManager.nPropiedades+=1;
                 gameManager.UpdateMoney(-propiedades[tipo].precio);
                 propiedadesCompradas[tipo]++;
                 rentaTotal += propiedades[tipo].renta;
@@ -109,20 +110,23 @@ namespace frogjil
                             Destroy(edificio);
                         }
                         Bubble.GetComponent<Animator>().Play("Explotion");
+                        
                     }
                 }
                 gameManager.ActualizarPreciosUI(propiedades); // Actualizar los precios en la UI
             }
         }
-
+        
         public void VenderPropiedad(string tipo)
         {
             if (propiedadesCompradas.ContainsKey(tipo) && propiedadesCompradas[tipo] > 0)
             {
                 propiedadesCompradas[tipo]--;
                 rentaTotal -= propiedades[tipo].renta;
+                gameManager.nPropiedades-=1;
                 gameManager.AddMoney(propiedades[tipo].precio * 0.8f); // Recuperar el 80% del precio de compra
             }
+            
         }
 
         public void CobrarLasRentas()
