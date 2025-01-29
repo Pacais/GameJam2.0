@@ -2199,6 +2199,7 @@ MonoBehaviour:
   rentaText: {fileID: 630087177}
   creditText: {fileID: 1858672673}
   informeText: {fileID: 1535529272}
+  nPropiedades: 0
   credit: {fileID: 0}
   gameOver: {fileID: 1586499877}
   pisoText: {fileID: 656392439}
