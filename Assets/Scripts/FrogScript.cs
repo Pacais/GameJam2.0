@@ -6,28 +6,14 @@ public class FrogScript : MonoBehaviour
     private Animator animator;
     public AudioSource sonidoRana;
     private Coroutine stopAudioCoroutine;
-    private bool isIdle = false; // Estado inicial del personaje (idle)
-
 
     void Start()
     {
         // Obtiene el componente Animator
         animator = GetComponent<Animator>();
-        StartCoroutine(PlayIdleAnimation());
+        StartCoroutine(PlayIdleAnimationLoop()); // Inicia la corrutina para la animación en bucle
+    }
 
-    }
-    private void Update() {
-        // Activa o desactiva la animación de idle
-        if (isIdle)
-        {
-            animator.SetTrigger("isIdle");
-        }
-        else
-        {
-            animator.ResetTrigger("isIdle");
-        }
-        
-    }
     void OnMouseDown()
     {
         // Activa el trigger para reproducir la animación
@@ -58,20 +44,16 @@ public class FrogScript : MonoBehaviour
             stopAudioCoroutine = StartCoroutine(StopAudioAfterDelay(0.2f));
         }
     }
-    private System.Collections.IEnumerator PlayIdleAnimation()
+
+    private IEnumerator PlayIdleAnimationLoop()
     {
-        while (true) // Bucle infinito
+        while (true) // Bucle infinito para repetir la animación
         {
-            // Espera 2 segundos
-            yield return new WaitForSeconds(2f);
-
-            // Activa la animación cambiando el estado de isIdle
-            isIdle = !isIdle;
-
-            // Opcional: Puedes agregar un mensaje de depuración para verificar
-            Debug.Log("Idle state changed to: " + isIdle);
+            yield return new WaitForSeconds(2f); // Espera 2 segundos
+            animator.SetTrigger("Idle"); // Activa la animación de Idle
         }
     }
+
     private IEnumerator StopAudioAfterDelay(float delay)
     {
         // Espera el tiempo especificado
